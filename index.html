@@ -1,0 +1,182 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Untitled Document</title>
+<style>
+.mobile-menu {
+	overflow:hidden;
+}
+.mobile-menu ul#main-menu {
+	margin:0px;
+	padding:0px;
+	width:100%;
+	position:relative;
+}
+.mobile-menu li {
+	list-style:none;
+	background:#666;
+	position:relative;
+}
+.sublinks {
+	position:absolute;
+	left:0px;
+	top:0px;
+	width:100%;
+	display:block;
+	margin:0px;
+	padding:0px;
+}
+.mobile-menu li a {
+	display:block;
+	color:#fff;
+	font:normal 12px Arial, Helvetica, sans-serif;
+	border-bottom:1px solid #CCC;
+	padding:4px 10px;
+	text-decoration:none;
+}
+</style>
+<script src="js/jquery-1.7.min.js" type="text/javascript"></script>
+<script>
+$(document).ready(function()
+{
+ $.fn.mobilemenu = function (o) {
+     var mobilmenu = $(this);
+     mobilmenu.find('li ul').hide();
+     mobilmenu.width($(window).width()).height($(window).height())
+     var length = mobilmenu.find('li').length;
+     mobilmenu.find('li').each(function (e) {
+         if ($(this).has("ul")) {
+             $(this).attr('rel', 'menu' + e)
+             $(this).find('ul').attr('id', 'menu' + e)
+             $(this).find('ul').prev().attr('href', '#menu' + e)
+             $(this).find('ul').find('.parent').attr('href', '#menu' + (e - 2))
+             if (e == length - 1) {
+                 removelist()
+             }
+         }
+     })
+
+     function removelist() {
+         mobilmenu.find('li').each(function (e) {
+             var submenu = $(this).find('.sublinks').remove();
+             $('.mobile-menu').append(submenu);
+             if (e == length - 1) {
+                 createmenu()
+             }
+         })
+
+     }
+
+     function createmenu() {
+         $('.sublinks').show().css({
+             'left': $(window).width()
+         })
+     }
+     $(mobilmenu).find('li a').click(function (e) {
+         var href = $(this).attr('href');
+         var cla = $(this).attr('class');
+         var checkisurl = href.substring(0, 4);
+         if (checkisurl == '#men') {
+             e.preventDefault();
+             if (cla == 'parent') {
+
+                 $(this).parent().parent().animate({
+                     'left': $(window).width()
+                 })
+                 $(href).animate({
+                     'left': 0
+                 })
+             } else if (cla == 'superparent') {
+                 $(this).parent().parent().animate({
+                     'left': $(window).width()
+                 })
+                 $('#main-menu').animate({
+                     'left': 0
+                 })
+             } else {
+                 $(this).parent().parent().animate({
+                     'left': -$(window).width()
+                 })
+                 $(href).animate({
+                     'left': 0
+                 })
+             }
+         }
+
+     })
+ }
+$('.mobile-menu').mobilemenu()
+
+})
+
+</script>
+</head>
+
+<body style="margin:0px; padding:0px; overflow:hidden">
+<div class="mobile-menu">
+	<ul id="main-menu">
+		<li><a href="#">Home</a>
+			<ul class="sublinks">
+			 <li><a href="#menu-main" class="superparent">Home</a> </li>
+				<li><a href="#">subLink1</a>
+					<ul class="sublinks">
+					  <li><a href="#" class="parent">subLink1</a> </li>
+						<li><a href="#">Link1</a> </li>
+						<li><a href="#">Link1</a></li>
+						<li><a href="#">Link1</a></li>
+						<li><a href="#">Link1</a></li>
+						<li><a href="#">Link1</a></li>
+					</ul>
+				</li>
+				<li><a href="#">subLink1</a></li>
+				<li><a href="#">subLink1</a></li>
+				<li><a href="#">subLink1</a></li>
+				<li><a href="#">subLink1</a></li>
+			</ul>
+		</li>
+		<li><a href="#">service</a>
+			<ul class="sublinks">
+			 <li><a href="#menu-main" class="superparent">service</a> </li>
+				<li><a href="#">subLink1</a>
+					<ul class="sublinks">
+					  <li><a href="#" class="parent">subLink1</a> </li>
+						<li><a href="#">Link1</a> </li>
+						<li><a href="#">Link1</a></li>
+						<li><a href="#">Link1</a></li>
+						<li><a href="#">Link1</a></li>
+						<li><a href="#">Link1</a></li>
+					</ul>
+				</li>
+				<li><a href="#">subLink1</a></li>
+				<li><a href="#">subLink1</a></li>
+				<li><a href="#">subLink1</a></li>
+				<li><a href="#">subLink1</a></li>
+			</ul>
+		</li>
+		<li><a href="#">about</a>
+			<ul class="sublinks">
+			 <li><a href="#menu-main" class="superparent">about</a> </li>
+				<li><a href="#">subLink1</a>
+					<ul class="sublinks">
+					  <li><a href="#" class="parent">subLink1</a> </li>
+						<li><a href="#">Link1</a> </li>
+						<li><a href="#">Link1</a></li>
+						<li><a href="#">Link1</a></li>
+						<li><a href="#">Link1</a></li>
+						<li><a href="#">Link1</a></li>
+					</ul>
+				</li>
+				<li><a href="#">subLink1</a></li>
+				<li><a href="#">subLink1</a></li>
+				<li><a href="#">subLink1</a></li>
+				<li><a href="#">subLink1</a></li>
+			</ul>
+		</li>
+		<li><a href="#">Artificial</a></li>
+		<li><a href="#">creation</a></li>
+		<li><a href="#">Contact</a></li>
+	</ul>
+</div>
+</body>
+</html>
